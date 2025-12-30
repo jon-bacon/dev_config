@@ -11,4 +11,4 @@ fi
 
 # Make sure we're starting sensible
 $SUDO pacman -Suy --noconfirm
-$SUDO pacman -S --noconfirm patch tmux
+$SUDO pacman -S --noconfirm patch tmux wl-clipboard
