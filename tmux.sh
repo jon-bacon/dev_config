@@ -5,21 +5,28 @@ set -eEuo pipefail
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
-# Don't need sudo if running as root
-SUDO=
-if ! [ $(id -u) = 0 ]; then
-  SUDO=sudo
+# Figure out which OS we're running on and install tmux
+if [ -f /etc/os-release ]; then
+  . /etc/os-release
+else
+  echo "Unable to determine which OS is running!"
+  exit 1
 fi
 
-# Make sure we're starting sensible
-$SUDO pacman -Suy --noconfirm
-$SUDO pacman -S --noconfirm git patch tmux
+if [ "${ID}" = "cachyos" ]; then
+  "${SCRIPT_DIR}"/tmux/arch.sh
+elif [ "${ID}" = "almalinux" ]; then
+  "${SCRIPT_DIR}"/tmux/rhel.sh
+else
+  echo "Not able to install tmux on OS ${ID}"
+  exit 1
+fi
 
-# The next bits come mainlyu from a blog I found https://www.markneuburger.com/git-statuses-in-tmux-panes/
+# The next bits come mainly from a blog I found https://www.markneuburger.com/git-statuses-in-tmux-panes/
 
 # Install "Oh My tmux"
 pushd "${HOME}"
-git clone --single-branch https://github.com/gpakosz/.tmux.git
+git clone --single-branch https://github.com/jon-bacon/.tmux.git
 popd
 
 # Create tmux configs
