@@ -12,8 +12,8 @@ if ! [ $(id -u) = 0 ]; then
 fi
 
 # Make sure we're starting sensible
-$SUDO pacman -Suy
-$SUDO pacman -S tmux
+$SUDO pacman -Suy --noconfirm
+$SUDO pacman -S --noconfirm git patch tmux
 
 # The next bits come mainlyu from a blog I found https://www.markneuburger.com/git-statuses-in-tmux-panes/
 
