@@ -5,9 +5,15 @@ set -eEuo pipefail
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
+# Don't need sudo if running as root
+SUDO=
+if ! [ $(id -u) = 0 ]; then
+  SUDO=sudo
+fi
+
 # Make sure we're starting sensible
-sudo pacman -Suy
-sudo pacman -S tmux
+$SUDO pacman -Suy
+$SUDO pacman -S tmux
 
 # The next bits come mainlyu from a blog I found https://www.markneuburger.com/git-statuses-in-tmux-panes/
 
