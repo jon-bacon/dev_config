@@ -11,4 +11,4 @@ fi
 
 # Make sure we're starting sensible
 $SUDO dnf -y update
-$SUDO dnf -y install patch tmux
+$SUDO dnf -y install patch tmux xclip
