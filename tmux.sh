@@ -13,13 +13,16 @@ else
   exit 1
 fi
 
-if [ "${ID}" = "cachyos" ]; then
-  "${SCRIPT_DIR}"/tmux/arch.sh
-elif [ "${ID}" = "almalinux" ]; then
-  "${SCRIPT_DIR}"/tmux/rhel.sh
-else
-  echo "Not able to install tmux on OS ${ID}"
-  exit 1
+# The presence of the file means we're in a container that already has the prerequisits installed
+if [ ! -f /.jb_dev_container ]; then
+  if [ "${ID}" = "cachyos" ] || [ "${ID}" = "arch" ]; then
+    "${SCRIPT_DIR}"/tmux/arch.sh
+  elif [ "${ID}" = "almalinux" ]; then
+    "${SCRIPT_DIR}"/tmux/rhel.sh
+  else
+    echo "Not able to install tmux on OS ${ID}"
+    exit 1
+  fi
 fi
 
 # The next bits come mainly from a blog I found https://www.markneuburger.com/git-statuses-in-tmux-panes/

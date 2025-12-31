@@ -13,13 +13,16 @@ else
   exit 1
 fi
 
-if [ "${ID}" = "cachyos" ]; then
-  "${SCRIPT_DIR}"/lazyvim/arch.sh
-elif [ "${ID}" = "almalinux" ]; then
-  "${SCRIPT_DIR}"/lazyvim/rhel-9.sh
-else
-  echo "Not able to install lazyvim on OS ${ID}"
-  exit 1
+# The presence of the file means we're in a container that already has the prerequisits installed
+if [ ! -f /.jb_dev_container ]; then
+  if [ "${ID}" = "cachyos" ] || [ "${ID}" = "arch" ]; then
+    "${SCRIPT_DIR}"/lazyvim/arch.sh
+  elif [ "${ID}" = "almalinux" ]; then
+    "${SCRIPT_DIR}"/lazyvim/rhel-9.sh
+  else
+    echo "Not able to install lazyvim on OS ${ID}"
+    exit 1
+  fi
 fi
 
 pushd "${HOME}"
