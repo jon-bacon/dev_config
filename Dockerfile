@@ -2,19 +2,24 @@ FROM archlinux:base
 
 RUN pacman -Suy --noconfirm && \
     pacman -S --noconfirm \
-           patch \
-           tmux \
+           ast-grep \
+           clang \
+           fd \
+           fzf \
            git \
-           vim \
-           neovim \
            lazygit \
+           luarocks \
+           neovim \
+           openssh \
+           patch \
+           python \
+           python-pip \
+           ripgrep \
+           tmux \
            tree-sitter-cli \
            tree-sitter-vim \
-           fzf \
-           ripgrep \
-           fd \
-           luarocks \
-           ast-grep
+           vim \
+           wget
 
 RUN touch /.jb_dev_container
 
